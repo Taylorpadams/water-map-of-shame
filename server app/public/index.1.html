@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -35,6 +36,14 @@ html, body, .container, #map {
 .esriLayerList .esriList ul{
   background-color: #fff;
 }
+.button-link{
+    
+     padding: 10px 15px;
+    background: #4479BA;
+    color: #FFF;
+    
+    
+}
 </style>
 <script>var dojoConfig = { parseOnLoad: true };</script>
 <script src="http://js.arcgis.com/3.14/"></script>
@@ -50,7 +59,7 @@ require([
     LayerList
 ) {
     //Create a map based on an ArcGIS Online web map id 
-    arcgisUtils.createMap("e02cf1a74ac247f582676808ab9a7a0d", "map").then(function(response){
+    arcgisUtils.createMap("abb1277e2dfb48528422c370cf3d0a8d", "map").then(function(response){
         var myWidget = new LayerList({
            map: response.map,
            layers: arcgisUtils.getLayerList(response) 
