@@ -97,13 +97,14 @@ require([
       map.addLayer(featureLayer);
 
       //resize the info window 
-      map.infoWindow.resize(180, 75);
+      map.infoWindow.resize(300, 300);
+
 
       
       function getTextContent(graphic){
         var attr = graphic.attributes;
         console.log(attr);
-        return "<b>" + attr.category + "</b><br /><h2>Description: <p>"+attr.description+"</p><button>Publish</button>";
+        return "<b>" + attr.category + "</b><br /><h2>Date: </h2><p>"+new Date(attr.date).toUTCString()+"<h2>Description: <p>"+attr.description+"</p><img src='http://static.indianexpress.com/m-images/M_Id_408311_water.jpg'><button>Publish</button>";
       }
         var myWidget = new LayerList({
            map: map,
