@@ -1,4 +1,6 @@
 {
-  "name": "ionic-app",
-  "app_id": ""
+  "name": "myApp",
+  "email": "",
+  "app_id": "",
+  "package_name": ""
 }

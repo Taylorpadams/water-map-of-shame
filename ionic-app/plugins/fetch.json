@@ -1,0 +1,20 @@
+{
+    "org.apache.cordova.camera": {
+        "source": {
+            "type": "local",
+            "path": "/var/folders/yc/wb4ct6qn5vl2r6hv8k3mck_w0000gq/T/org.apache.cordova.camera/package"
+        }
+    },
+    "org.apache.cordova.console": {
+        "source": {
+            "type": "local",
+            "path": "/var/folders/yc/wb4ct6qn5vl2r6hv8k3mck_w0000gq/T/org.apache.cordova.console/package"
+        }
+    },
+    "org.apache.cordova.device": {
+        "source": {
+            "type": "local",
+            "path": "/var/folders/yc/wb4ct6qn5vl2r6hv8k3mck_w0000gq/T/org.apache.cordova.device/package"
+        }
+    }
+}
