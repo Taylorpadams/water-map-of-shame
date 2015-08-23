@@ -21,7 +21,7 @@ angular.module('starter', ['ionic', 'starter.services', 'ngCordova'])
     });
   })
 
-  .controller('MainCtrl', function ($scope, $http, $cordovaGeolocation, Camera) {
+  .controller('MainCtrl', function ($scope, $state, $http, $cordovaGeolocation, Camera, $ionicPopup) {
     $scope.report = {};
     $scope.report.date = new Date();
     $scope.getLatLong = function () {
@@ -41,7 +41,7 @@ angular.module('starter', ['ionic', 'starter.services', 'ngCordova'])
 
     // Called when the form is submitted
     $scope.createReport = function (report) {
-      console.log(report);
+
       var lat = report.latlong.substring(0, report.latlong.indexOf(","));
       var long = report.latlong.substring(report.latlong.indexOf(",") + 1);
 
@@ -55,44 +55,57 @@ angular.module('starter', ['ionic', 'starter.services', 'ngCordova'])
           isPublished: 0
         }
       };
-      var features= [];
+      var features = [];
       features.push(feature);
-      console.log(features);
-           // Simple POST request example (passing data) :
-        $http.post('http://services6.arcgis.com/IjlJ3SNhNad1djSr/arcgis/rest/services/Water_Wastage/FeatureServer/0/addFeatures?features='+JSON.stringify(features)+'&f=json', report).
-        then(function(response) {
+      //console.log(features);
+      // Simple POST request example (passing data) :
+      $http.post('http://services6.arcgis.com/IjlJ3SNhNad1djSr/arcgis/rest/services/Water_Wastage/FeatureServer/0/addFeatures?features=' + encodeURIComponent(JSON.stringify(features)) + '&f=json', null).
+        then(function (response) {
           // this callback will be called asynchronously
           // when the response is available
           console.log(response);
-          }, function(response) {
+          
+          // An alert dialog
+          $scope.showAlert = function () {
+            var alertPopup = $ionicPopup.alert({
+              title: 'Submittied Complaint',
+              template: 'Complaint Submitted!'
+            });
+            alertPopup.then(function (res) {
+              console.log('Submitted');
+              $state.go('');
+            });
+          };
+
+        }, function (response) {
           // called asynchronously if an error occurs
           // or server returns response with an error status.
-          console.log(response);
+          console.log(JSON.stringify(response));
         });
-      };
+    };
 
-      $scope.getPhoto = function () {
-        Camera.getPicture({
-          quality: 75,
-          targetWidth: 320,
-          targetHeight: 320,
-          saveToPhotoAlbum: false
-        }).then(function (imageURI) {
-          // console.log(imageData);
-          $scope.report.imageData = imageURI;
-          //$scope.report.lastPhoto = imageURI;
-        }, function (err) {
-          console.err(err);
-        });
-        /*
-        navigator.camera.getPicture(function(imageURI) {
-          console.log(imageURI);
-        }, function(err) {
-        }, { 
-          quality: 50,
-          destinationType: Camera.DestinationType.DATA_URL
-        });
-        */
-      }
+    $scope.getPhoto = function () {
+      Camera.getPicture({
+        quality: 75,
+        targetWidth: 320,
+        targetHeight: 320,
+        saveToPhotoAlbum: false
+      }).then(function (imageURI) {
+        // console.log(imageData);
+        $scope.report.imageData = imageURI;
+        //$scope.report.lastPhoto = imageURI;
+      }, function (err) {
+        console.err(err);
+      });
+      /*
+      navigator.camera.getPicture(function(imageURI) {
+        console.log(imageURI);
+      }, function(err) {
+      }, { 
+        quality: 50,
+        destinationType: Camera.DestinationType.DATA_URL
+      });
+      */
+    }
 
-    })
+  })
