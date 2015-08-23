@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.services'])
+angular.module('starter', ['ionic', 'starter.services', 'ngCordova'])
 
 .config(function($compileProvider){
   $compileProvider.imgSrcSanitizationWhitelist(/^\s*(https?|ftp|mailto|file|tel):/);
@@ -21,12 +21,10 @@ angular.module('starter', ['ionic', 'starter.services'])
 })
 
 .controller('MainCtrl', function($scope, $http, $cordovaGeolocation, Camera) {
-
-  $scope.date = new Date();
-  
   $scope.report = {};
-
+  $scope.report.date = new Date();
 $scope.getLatLong=function(){
+  console.log("getLatLong");
   var posOptions = {timeout: 10000, enableHighAccuracy: false};
   $cordovaGeolocation
     .getCurrentPosition(posOptions)
@@ -43,28 +41,29 @@ $scope.getLatLong=function(){
    // Called when the form is submitted
   $scope.createReport = function(report) {
       console.log(report);
+      
     
-     // Simple POST request example (passing data) :
-  $http.post('http://192.168.0.100:3000/testreport', report).
-  then(function(response) {
-    // this callback will be called asynchronously
-    // when the response is available
-    }, function(response) {
-    // called asynchronously if an error occurs
-    // or server returns response with an error status.
-  });
+  //    // Simple POST request example (passing data) :
+  // $http.post('http://192.168.0.100:3000/testreport', report).
+  // then(function(response) {
+  //   // this callback will be called asynchronously
+  //   // when the response is available
+  //   }, function(response) {
+  //   // called asynchronously if an error occurs
+  //   // or server returns response with an error status.
+  // });
   };
   
   $scope.getPhoto = function() {
-    console.log('Getting camera');
     Camera.getPicture({
       quality: 75,
       targetWidth: 320,
       targetHeight: 320,
       saveToPhotoAlbum: false
     }).then(function(imageURI) {
-      console.log(imageData);
-      $scope.lastPhoto =  "data:image/jpeg;base64," + imageData;
+     // console.log(imageData);
+      $scope.report.imageData =  imageURI;
+      //$scope.report.lastPhoto = imageURI;
     }, function(err) {
       console.err(err);
     });

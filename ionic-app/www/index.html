@@ -30,9 +30,7 @@
     <h1 class="title">Report</h1>
   </ion-header-bar>
   <ion-content padding="true">
-      <img ng-src="{{lastPhoto}}" style="max-width: 100%">
-      <input type="hidden" value="{{lastPhoto}}" ng-model="report.imageData">
-      <img ng-show="lastPhoto === undefined" src="../img/placeholder.png">
+      <img ng-src="{{report.imageData}}" ng-moodel="report.imageData" style="max-width: 100%">
       <button ng-click="getPhoto()" class="button button-block button-primary">Take Photo</button>
       <div class="list">
         <label class="item item-input item-select">
@@ -57,12 +55,12 @@
           <textarea placeholder="description" ng-model="report.description" required></textarea>
         </label>
         <label class="item item-input">
-          <input type="date" ng-model = "report.date" value="{{date | date:'yyyy-MM-dd'}}" required>
+          <input type="date" ng-model = "report.date"   placeholder="yyyy-MM-dd" required>
         </label>
          <label class="item item-input">
-          <input type="text" ng-model = "report.latlong"  required>
+          <input type="text" ng-model = "report.latlong" placeholder="latlong" required>
         </label>
-        <button type="button" ng-click="getLatLong()" class="button button-positive">
+       <button type="button" ng-click="getLatLong()" class="button button-positive">
           Use Current Location
         </button>
         <label class="item item-input">
