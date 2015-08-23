@@ -104,8 +104,8 @@ function publishWastage(featureId){
         type: "POST",
         url: updateUrl+"?features="+JSON.stringify(dataToSend),
         success: function(data){
-            
-            console.log(data);
+              console.log(data);
+              location.reload(true);
         }
        });
 });
