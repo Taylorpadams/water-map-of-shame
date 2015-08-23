@@ -66,7 +66,7 @@ angular.module('starter', ['ionic', 'starter.services', 'ngCordova'])
           console.log(response);
           
           // An alert dialog
-          $scope.showAlert = function () {
+
             var alertPopup = $ionicPopup.alert({
               title: 'Submittied Complaint',
               template: 'Complaint Submitted!'
@@ -75,7 +75,9 @@ angular.module('starter', ['ionic', 'starter.services', 'ngCordova'])
               console.log('Submitted');
               $state.go('');
             });
-          };
+          
+          
+          
 
         }, function (response) {
           // called asynchronously if an error occurs
