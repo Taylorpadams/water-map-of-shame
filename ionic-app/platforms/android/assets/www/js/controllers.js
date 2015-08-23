@@ -8,7 +8,7 @@ angular.module('starter.controllers', [])
 })
 
 .controller('FriendsCtrl', function($scope, Friends, Camera) {
-  $scope.friends = Friends.all();
+  $scope.date = new Date();
   $scope.getPhoto = function() {
     console.log('Getting camera');
     Camera.getPicture({
@@ -17,8 +17,8 @@ angular.module('starter.controllers', [])
       targetHeight: 320,
       saveToPhotoAlbum: false
     }).then(function(imageURI) {
-      console.log(imageURI);
-      $scope.lastPhoto = imageURI;
+      console.log(imageData);
+      $scope.lastPhoto =  "data:image/jpeg;base64," + imageData;
     }, function(err) {
       console.err(err);
     });

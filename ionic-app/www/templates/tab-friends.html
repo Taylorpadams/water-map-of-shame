@@ -1,10 +1,7 @@
 <ion-view title="Friends">
-  <ion-content class="has-header">
-  <button ng-click="getPhoto()" class="button button-block button-primary">Photo</button>
-    <ion-list>
-      <ion-item ng-repeat="friend in friends" type="item-text-wrap" href="#/tab/friend/{{friend.id}}">
-        {{friend.name}}
-      </ion-item>
-    </ion-list>
+ <ion-content>
+    <img ng-show="imgURI !== undefined" ng-src="{{imgURI}}">
+    <img ng-show="imgURI === undefined" ng-src="http://placehold.it/300x300">
+    <button class="button" ng-click="getPhoto()">Take Picture</button>
   </ion-content>
 </ion-view>

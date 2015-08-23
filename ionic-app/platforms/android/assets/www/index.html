@@ -1,34 +1,65 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
-    <title></title>
 
-    <link href="lib/ionic/css/ionic.css" rel="stylesheet">
-    <link href="css/style.css" rel="stylesheet">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+  <title></title>
 
-    <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
+  <link href="lib/ionic/css/ionic.css" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
+
+  <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
     <link href="css/ionic.app.css" rel="stylesheet">
     -->
 
-    <!-- ionic/angularjs js -->
-    <script src="lib/ionic/js/ionic.bundle.js"></script>
+  <!-- ionic/angularjs js -->
+  <script src="lib/ionic/js/ionic.bundle.js"></script>
 
-    <!-- cordova script (this will be a 404 during development) -->
-    <script src="cordova.js"></script>
+  <!-- cordova script (this will be a 404 during development) -->
+  <script src="cordova.js"></script>
 
-    <!-- your app's js -->
-    <script src="js/app.js"></script>
-    <script src="js/services.js"></script>
-  </head>
-  <body ng-app="starter" ng-controller="MainCtrl">
-    <ion-header-bar>
-      <h1 class="title">Photos</h1>
-    </ion-header-bar>
-    <ion-content padding="true">
-      <button ng-click="getPhoto()" class="button button-block button-primary">Take Photo</button>
-      <img ng-src="{{lastPhoto}}" style="max-width: 100%">
-    </ion-content>
-  </body>
+  <!-- your app's js -->
+  <script src="js/app.js"></script>
+  <script src="js/services.js"></script>
+</head>
+
+<body ng-app="starter" ng-controller="MainCtrl">
+  <ion-header-bar>
+    <h1 class="title">Report</h1>
+  </ion-header-bar>
+  <ion-content padding="true">
+    <img ng-src="{{lastPhoto}}" style="max-width: 100%">
+    <img ng-show="lastPhoto === undefined" ng-src="http://placehold.it/300x300">
+    <button ng-click="getPhoto()" class="button button-block button-primary">Take Photo</button>
+    <div class="list">
+      <label class="item item-input item-select">
+        <div class="input-label">
+          Type
+        </div>
+        <select>
+          <option>business</option>
+          <option selected>residential</option>
+        </select>
+      </label>
+      <label class="item item-input item-select">
+        <div class="input-label">
+          Category
+        </div>
+        <select>
+          <option>Water Leak</option>
+          <option selected>Water Wastage</option>
+        </select>
+      </label>
+      <label class="item item-input">
+        <input type="text" placeholder="description">
+      </label>
+      <label class="item item-input">
+        <input type="date" value="{{date | date:'yyyy-MM-dd'}}">
+      </label>
+    </div>
+
+  </ion-content>
+</body>
+
 </html>
