@@ -6,8 +6,8 @@ router.get('/', function(req, res) {
 });
 
 
-router.post('/testreport', function(req, res) {
-    console.log(req);
+router.post('/public', function(req, res) {
+      res.sendFile('publicMap.html');
 });
 
 

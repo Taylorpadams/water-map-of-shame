@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta name="viewport" content="initial-scale=1, maximum-scale=1,user-scalable=no">
-<title>Layer List Dijit</title>
+<title>Water Map of Shame</title>
 <link rel="stylesheet" href="http://js.arcgis.com/3.14/dijit/themes/claro/claro.css">
 <link rel="stylesheet" href="http://js.arcgis.com/3.14/esri/css/esri.css">
 
@@ -15,12 +15,21 @@ html, body, .container, #map {
     padding:0;
     margin:0;
     font-family: "Open Sans";
+
+
 }
 #map {
     padding:0;
 }
 #layerListPane{
     width:25%;
+    padding: 10px;
+    background-color: #ADD8E6;
+}
+.inner{
+  
+   background-color: white;
+   padding: 10px;
 }
 .esriLayer{
   background-color: #fff;
@@ -44,21 +53,29 @@ require([
     "esri/arcgis/utils",
     "esri/dijit/LayerList",
     "esri/dijit/Legend",
+    "esri/dijit/FeatureTable",
+     "esri/layers/FeatureLayer",
      "esri/dijit/Scalebar",
     "dijit/layout/BorderContainer", 
     "dijit/layout/ContentPane",
+    "dojo/ready",
+      "dojo/on",
     "dojo/domReady!"
 ], function(
     arcgisUtils,
     LayerList,
-    Legend
+    Legend,
+    FeatureTable,
+    on,
+    FeatureLayer
 ) {
     //Create a map based on an ArcGIS Online web map id 
     arcgisUtils.createMap("e02cf1a74ac247f582676808ab9a7a0d", "map").then(function(response){
+    
         var layers = response.itemInfo.itemData.operationalLayers;
         dojo.forEach(layers,function(layer){
                console.log(layer.title);
-               console.log(layer);
+               //console.log(layer);
         });
         
           var legendLayers = arcgisUtils.getLegendLayers(response); 
@@ -79,6 +96,11 @@ require([
             }
               
         });
+        
+        
+         
+         
+       
     });
      
 });
@@ -110,8 +132,10 @@ function publishWastage(featureId){
        });
 });
     
-    
+ 
 }
+
+
 
 </script>
 </head>
@@ -119,12 +143,18 @@ function publishWastage(featureId){
 <div class="container" data-dojo-type="dijit/layout/BorderContainer" 
 data-dojo-props="design:'headline',gutters:false">
 <div id="layerListPane" data-dojo-type="dijit/layout/ContentPane" data-dojo-props="region:'right'">
+<div class="inner">
+<h2>Water Map of Shame</h2>
+<hr>
+<h3>Toggle Layers</h3>
     <div id="layerList"></div>
     <hr>
-    <h2>Legend:</h2>
+    <h3>Legend:</h3>
         <div id="legend"></div>
 </div>
+</div>
 <div id="map" data-dojo-type="dijit/layout/ContentPane" data-dojo-props="region:'center'"></div>
+
 </div>
 </body>
 </html> 
