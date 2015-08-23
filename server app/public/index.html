@@ -38,27 +38,81 @@ html, body, .container, #map {
 </style>
 <script>var dojoConfig = { parseOnLoad: true };</script>
 <script src="http://js.arcgis.com/3.14/"></script>
+<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
 <script>
 require([
     "esri/arcgis/utils",
     "esri/dijit/LayerList",
+    "esri/dijit/Legend",
+     "esri/dijit/Scalebar",
     "dijit/layout/BorderContainer", 
     "dijit/layout/ContentPane",
     "dojo/domReady!"
 ], function(
     arcgisUtils,
-    LayerList
+    LayerList,
+    Legend
 ) {
     //Create a map based on an ArcGIS Online web map id 
     arcgisUtils.createMap("e02cf1a74ac247f582676808ab9a7a0d", "map").then(function(response){
+        var layers = response.itemInfo.itemData.operationalLayers;
+        dojo.forEach(layers,function(layer){
+               console.log(layer.title);
+               console.log(layer);
+        });
+        
+          var legendLayers = arcgisUtils.getLegendLayers(response); 
+          var legendDijit = new Legend({
+            map: response.map,
+            layerInfos: legendLayers
+          },"legend");
+          legendDijit.startup();
         var myWidget = new LayerList({
            map: response.map,
            layers: arcgisUtils.getLayerList(response) 
         },"layerList");
         myWidget.startup();
+         $(".claro").on("click", "a",function(event){
+            event.preventDefault();
+            if($(this).attr("href").indexOf("publish")!=-1){
+                publishWastage($(this).attr("href").substring($(this).attr("href").indexOf("_")+1));
+            }
+              
+        });
     });
-
+     
 });
+
+function publishWastage(featureId){
+    
+ var getUrl = 'http://services6.arcgis.com/IjlJ3SNhNad1djSr/arcgis/rest/services/Water_Wastage/FeatureServer/0/'+featureId+'?f=pjson';
+ 
+  var updateUrl = 'http://services6.arcgis.com/IjlJ3SNhNad1djSr/arcgis/rest/services/Water_Wastage/FeatureServer/0/updateFeatures';
+ $.getJSON(getUrl, function( data ) {
+     console.log("feature is published?: "+data.feature.attributes.isPublished);
+    if(data.feature.attributes.isPublished == true){
+        data.feature.attributes.isPublished = false;
+        console.log("changed to "+data.feature.attributes.isPublished);
+        
+    }else{
+        data.feature.attributes.isPublished = true;
+        console.log("changed to"+data.feature.attributes.isPublished);
+    }
+    var dataToSend = [];
+    dataToSend.push(data.feature);
+    $.ajax({
+        type: "POST",
+        url: updateUrl+"?features="+JSON.stringify(dataToSend),
+        success: function(data){
+            
+            console.log(data);
+        }
+       });
+});
+    
+    
+}
+
 </script>
 </head>
 <body class="claro">
@@ -66,6 +120,9 @@ require([
 data-dojo-props="design:'headline',gutters:false">
 <div id="layerListPane" data-dojo-type="dijit/layout/ContentPane" data-dojo-props="region:'right'">
     <div id="layerList"></div>
+    <hr>
+    <h2>Legend:</h2>
+        <div id="legend"></div>
 </div>
 <div id="map" data-dojo-type="dijit/layout/ContentPane" data-dojo-props="region:'center'"></div>
 </div>
