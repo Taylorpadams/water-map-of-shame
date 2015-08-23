@@ -7,31 +7,8 @@ angular.module('starter.controllers', [])
 .controller('DashCtrl', function($scope) {
 })
 
-.controller('FriendsCtrl', function($scope, Friends, Camera) {
-  $scope.date = new Date();
-  $scope.getPhoto = function() {
-    console.log('Getting camera');
-    Camera.getPicture({
-      quality: 75,
-      targetWidth: 320,
-      targetHeight: 320,
-      saveToPhotoAlbum: false
-    }).then(function(imageURI) {
-      console.log(imageData);
-      $scope.lastPhoto =  "data:image/jpeg;base64," + imageData;
-    }, function(err) {
-      console.err(err);
-    });
-    /*
-    navigator.camera.getPicture(function(imageURI) {
-      console.log(imageURI);
-    }, function(err) {
-    }, { 
-      quality: 50,
-      destinationType: Camera.DestinationType.DATA_URL
-    });
-    */
-  }
+.controller('FriendsCtrl', function($scope, $http, Friends, Camera) {
+ 
 })
 
 .controller('FriendDetailCtrl', function($scope, $stateParams, Friends) {

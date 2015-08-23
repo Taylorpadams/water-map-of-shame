@@ -29,36 +29,52 @@
     <h1 class="title">Report</h1>
   </ion-header-bar>
   <ion-content padding="true">
-    <img ng-src="{{lastPhoto}}" style="max-width: 100%">
-    <img ng-show="lastPhoto === undefined" ng-src="http://placehold.it/300x300">
-    <button ng-click="getPhoto()" class="button button-block button-primary">Take Photo</button>
-    <div class="list">
-      <label class="item item-input item-select">
-        <div class="input-label">
-          Type
-        </div>
-        <select>
-          <option>business</option>
-          <option selected>residential</option>
-        </select>
-      </label>
-      <label class="item item-input item-select">
-        <div class="input-label">
-          Category
-        </div>
-        <select>
-          <option>Water Leak</option>
-          <option selected>Water Wastage</option>
-        </select>
-      </label>
-      <label class="item item-input">
-        <input type="text" placeholder="description">
-      </label>
-      <label class="item item-input">
-        <input type="date" value="{{date | date:'yyyy-MM-dd'}}">
-      </label>
-    </div>
+      <img ng-src="{{lastPhoto}}" style="max-width: 100%">
+      <input type="hidden" value="{{lastPhoto}}" ng-model="report.imageData">
+      <img ng-show="lastPhoto === undefined" src="../img/placeholder.png">
+      <button ng-click="getPhoto()" class="button button-block button-primary">Take Photo</button>
+      <div class="list">
+        <label class="item item-input item-select">
+          <div class="input-label">
+            Type
+          </div>
+          <select ng-model="report.type">
+            <option>business</option>
+            <option selected>residential</option>
+          </select>
+        </label>
+        <label class="item item-input item-select">
+          <div class="input-label">
+            Category
+          </div>
+          <select ng-model="report.category">
+            <option>Water Leak</option>
+            <option selected>Water Wastage</option>
+          </select>
+        </label>
+        <label class="item item-input">
+          <textarea placeholder="description" ng-model="report.description" required></textarea>
+        </label>
+        <label class="item item-input">
+          <input type="date" ng-model = "report.date" value="{{date | date:'yyyy-MM-dd'}}" required>
+        </label>
+         <label class="item item-input">
+          <input type="text" ng-model = "report.latlong"  required>
+        </label>
+        <button type="button" ng-click="getLatLong()" class="button button-positive">
+          Use Current Location
+        </button>
+        <label class="item item-input">
+          <input type="email" ng-model="report.email" placeholder="contact email" required>
+        </label>
 
+      </div>
+      <div class="padding">
+
+        <button type="button" ng-click="createReport(report)" class="button button-block button-positive">
+          Submit Report
+        </button>
+      </div>
   </ion-content>
 </body>
 
