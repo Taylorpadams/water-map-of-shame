@@ -21,7 +21,7 @@ html, body, .container, #map {
 #map {
     padding:0;
 }
-#layerListPane{
+.layerListPane{
     width:25%;
     padding: 10px;
     background-color: #ADD8E6;
@@ -68,7 +68,8 @@ require([
     Legend,
     FeatureTable,
     on,
-    FeatureLayer
+    FeatureLayer,
+    Scalebar
 ) {
     //Create a map based on an ArcGIS Online web map id 
     arcgisUtils.createMap("e02cf1a74ac247f582676808ab9a7a0d", "map").then(function(response){
@@ -103,6 +104,33 @@ require([
          
        
     });
+    
+    //if accessing webmap from a portal outside of ArcGIS Online, uncomment and replace path with portal URL
+       //arcgisUtils.arcgisUrl = "http://pathto/portal/sharing/content/items";
+        arcgisUtils.createMap("f4b3553f5f3f4feea4941da8fa4f73ad","publicMap").then(function(response){
+         
+
+          var map = response.map;
+
+
+
+          //add the scalebar 
+          var scalebar = new Scalebar({
+            map: map,
+            scalebarUnit: "english"
+          });
+
+          //add the legend. Note that we use the utility method getLegendLayers to get 
+          //the layers to display in the legend from the createMap response.
+          var legendLayers = arcgisUtils.getLegendLayers(response); 
+          var legendDijit = new Legend({
+            map: map,
+            layerInfos: legendLayers
+          },"publicLegend");
+          legendDijit.startup();
+
+
+        });
      
 });
 
@@ -145,7 +173,7 @@ function publishWastage(featureId){
 <div data-dojo-type="dijit/layout/ContentPane" title="Admin Map" data-dojo-props="selected:true">
 <div class="container" data-dojo-type="dijit/layout/BorderContainer" 
 data-dojo-props="design:'headline',gutters:false">
-<div id="layerListPane" data-dojo-type="dijit/layout/ContentPane" data-dojo-props="region:'right'">
+<div class="layerListPane" data-dojo-type="dijit/layout/ContentPane" data-dojo-props="region:'right'">
 <div class="inner">
 <h2>Water Map of Shame</h2>
 <hr>
@@ -159,12 +187,20 @@ data-dojo-props="design:'headline',gutters:false">
 <div id="map" data-dojo-type="dijit/layout/ContentPane" data-dojo-props="region:'center'"></div>
 </div>
 </div>
-  <div data-dojo-type="dijit/layout/ContentPane" title="Public Map">
-            public map
+  
+ <div data-dojo-type="dijit/layout/ContentPane" title="Public Map">
+           <div id="mainWindow" data-dojo-type="dijit/layout/BorderContainer" data-dojo-props="design:'headline'" style="width:100%; height:100%;">
+            <div id="publicMap" class="roundedCorners shadow" data-dojo-type="dijit/layout/ContentPane" data-dojo-props="region:'center'"></div>
+             <div id="rightPane" class="layerListPane" data-dojo-type="dijit/layout/ContentPane" data-dojo-props="region:'right'" >
+        <div id="publicLegend"></div>
+      </div>
+    </div>
  </div>
+
+  
  <div data-dojo-type="dijit/layout/ContentPane" title="Contact LADWP">
             <h2>LADWP Hotline: 1 (800) 544-4498<h2>
-           <h2> Email: waterwaste@ladwp.com </h2>
+           <h2> Email: <a href="mailto:waterwaste@ladwp.com">waterwaste@ladwp.com</a> </h2>
  </div>
 </div>
 </body>
