@@ -30,7 +30,7 @@
   </ion-header-bar>
   <ion-content padding="true">
     <img ng-src="{{lastPhoto}}" style="max-width: 100%">
-    <img ng-show="lastPhoto === undefined" ng-src="http://placehold.it/300x300">
+    <img ng-show="lastPhoto === undefined" ng-src="./img/placeholder.png">
     <button ng-click="getPhoto()" class="button button-block button-primary">Take Photo</button>
     <div class="list">
       <label class="item item-input item-select">
@@ -52,12 +52,19 @@
         </select>
       </label>
       <label class="item item-input">
-        <input type="text" placeholder="description">
+        <textarea placeholder="description"></textarea>
       </label>
       <label class="item item-input">
         <input type="date" value="{{date | date:'yyyy-MM-dd'}}">
       </label>
+      <label class="item item-input">
+        <input type="email" placeholder="contact email">
+      </label>
+      
     </div>
+    <button class="button button-block button-positive">
+      Submit Report
+    </button>
 
   </ion-content>
 </body>
