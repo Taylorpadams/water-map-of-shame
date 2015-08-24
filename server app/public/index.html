@@ -128,6 +128,12 @@ require([
             layerInfos: legendLayers
           },"publicLegend");
           legendDijit.startup();
+          
+           var myWidget = new LayerList({
+           map: response.map,
+           layers: arcgisUtils.getLayerList(response) 
+        },"publicLayerList");
+        myWidget.startup();
 
 
         });
@@ -192,6 +198,7 @@ data-dojo-props="design:'headline',gutters:false">
            <div id="mainWindow" data-dojo-type="dijit/layout/BorderContainer" data-dojo-props="design:'headline'" style="width:100%; height:100%;">
             <div id="publicMap" class="roundedCorners shadow" data-dojo-type="dijit/layout/ContentPane" data-dojo-props="region:'center'"></div>
              <div id="rightPane" class="layerListPane" data-dojo-type="dijit/layout/ContentPane" data-dojo-props="region:'right'" >
+        <div id="publicLayerList"></div>
         <div id="publicLegend"></div>
       </div>
     </div>
